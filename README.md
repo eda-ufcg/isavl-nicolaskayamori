@@ -1,8 +1,8 @@
 # Identificação
 
-* Nome: 
-* Email (@ccc): 
-* Matrícula: 
+* Nome: Nicolas Kayamori Huschak
+* Email (@ccc): nicolas.kayamori.huschak@ccc.ufcg.edu.br
+* Matrícula: 124110694
 
 # Roteiro: isAVL
 
