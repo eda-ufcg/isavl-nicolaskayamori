@@ -8,7 +8,29 @@ public class BST {
     private int size;
 
     public boolean isAVL() {
-        
+        return isAVL(root, Integer.MIN_VALUE, Integer.MAX_VALUE) != -2;
+    }
+
+    private int isAVL(Node node, int min, int max){
+         if (node == null) return -1;
+
+    // Testa propriedade de BST
+    if (node.value <= min || node.value >= max) {
+        return -2; 
+    }
+
+    int leftHeight = isAVL(node.left, min, node.value);
+    if (leftHeight == -2) return -2;
+
+    int rightHeight = isAVL(node.right, node.value, max);
+    if (rightHeight == -2) return -2;
+
+    // Testa balanceamento AVL
+    if (Math.abs(leftHeight - rightHeight) > 1) {
+        return -2;
+    }
+
+    return 1 + Math.max(leftHeight, rightHeight);
     }
 
     /**
@@ -28,7 +50,7 @@ public class BST {
     }
 
     private int balance(Node node) {
-        if(node !null) return height(node.left) - height(node.right);
+        if(node!=null) {return height(node.left) - height(node.right);}
         return 0;  
     }
 
