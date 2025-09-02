@@ -8,29 +8,16 @@ public class BST {
     private int size;
 
     public boolean isAVL() {
-        return isAVL(root, Integer.MIN_VALUE, Integer.MAX_VALUE) != -2;
+        return isAVL(this.root);
     }
 
-    private int isAVL(Node node, int min, int max){
-         if (node == null) return -1;
+    private boolean isAVL(Node node){
+        if (node == null) return true;
 
-    // Testa propriedade de BST
-    if (node.value <= min || node.value >= max) {
-        return -2; 
-    }
-
-    int leftHeight = isAVL(node.left, min, node.value);
-    if (leftHeight == -2) return -2;
-
-    int rightHeight = isAVL(node.right, node.value, max);
-    if (rightHeight == -2) return -2;
-
-    // Testa balanceamento AVL
-    if (Math.abs(leftHeight - rightHeight) > 1) {
-        return -2;
-    }
-
-    return 1 + Math.max(leftHeight, rightHeight);
+        if(Math.abs(this.balance(node))>1){return false;}
+        else{
+            return isAVL(node.left) && isAVL(node.right);
+        }        
     }
 
     /**
@@ -214,8 +201,8 @@ public class BST {
         if (isEmpty())
             this.root = new Node(element);
         else {
-            Node aux = this.root;
-            recursiveAdd(aux, element);
+            
+            recursiveAdd(this.root, element);
         }
         this.size += 1;
         
@@ -245,7 +232,65 @@ public class BST {
             }
             recursiveAdd(node.right, element);
         }
+
+        Node b = node.parent;
+        Node a = b.parent;
+
+        if(this.isRightPending(a)){
+            if(this.isLeftPending(a.right)){
+                doubleRotateLeft(a);
+            } else{
+                rotateLeft(a);
+            }
+            }
+        else if(this.isLeftPending(a)){
+            if(this.isLeftPending(a.left)){
+                rotateRight(a);
+            }
+            else{
+                doubleRotateRight(a);
+            }
+        }
+   }
         
+    public void doubleRotateLeft(Node node){
+        rotateLeft(node.left);
+        rotateRight(node);
+    }
+
+    public void doubleRotateRight(Node node){
+        rotateRight(node.right);
+        rotateLeft(node);
+    }
+
+    public void rotateLeft(Node node){
+        Node b = node.right;
+        Node x = b.left;
+
+        node.right = x;
+        b.left = node;
+        node.height = Math.max(height(node.left), height(node.right));
+    }
+
+    public void rotateRight(Node node){
+        Node b = node.left;
+        Node x = b.right;
+
+        node.left = x;
+        b.right = node;
+
+        node.height = Math.max(height(node.left), height(node.right));
+    }
+
+    public boolean isLeftPending(Node node){
+        if(this.balance(node)>1){return true;}
+        return false;
+    }
+
+    public boolean isRightPending(Node node){
+        if(this.balance(node)<-1){return true;}
+
+        return false;
     }
     
     /**

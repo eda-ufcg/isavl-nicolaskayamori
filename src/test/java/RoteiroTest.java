@@ -1,4 +1,5 @@
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class RoteiroTest {
@@ -30,33 +31,38 @@ public class RoteiroTest {
     	assertFalse(bst.isAVL());    	
 
     	bst = new BST();
-    	bst.add(10);
+    	bst.recursiveAdd(10);
     	assertTrue(bst.isAVL());
-    	bst.add(5);
+    	bst.recursiveAdd(5);
     	assertTrue(bst.isAVL());
-    	bst.add(1);
+    	bst.recursiveAdd(1);
     	assertFalse(bst.isAVL());
 
     	bst = new BST();
-    	bst.add(10);
+    	bst.recursiveAdd(10);
     	assertTrue(bst.isAVL());
-    	bst.add(5);
+    	bst.recursiveAdd(5);
     	assertTrue(bst.isAVL());
-    	bst.add(6);
+    	bst.recursiveAdd(6);
     	assertFalse(bst.isAVL());
 
         bst = new BST();
     	values = new int[]{90,13,4,8,37,16,24,44,
     		42,88,51,72,81,84,92};
     	for (int i : values)
-    		bst.add(i);
+    		bst.recursiveAdd(i);
 		assertFalse(bst.isAVL());
 
         bst = new BST();
 		values = new int[]{23, 12, 40, 9, 25, 60, 50};
     	for (int i : values)
-    		bst.add(i);
+    		bst.recursiveAdd(i);
 		assertTrue(bst.isAVL());
+
+		bst = new BST();
+		values = new int[]{10, 11, 12};
+    	for (int i : values)
+    		bst.recursiveAdd(i);
     }
 
 }
